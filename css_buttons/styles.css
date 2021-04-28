@@ -1,0 +1,33 @@
+.btn {
+  min-width: 60px;
+  min-height: 30px;
+  padding: 5px;
+  font-size: 1.5rem;
+  transition: background-color 1s;
+  border: 1px solid grey;
+}
+.active {
+  color: black;
+  background-color: white;
+}
+.disabled {
+  opacity: 0.5;
+  color: grey;
+  cursor: not-allowed;
+}
+.danger {
+  border-color: red;
+}
+.btn:hover {
+  transition: all 1s;
+}
+.danger:hover {
+  background-color: rgba(255, 0, 0, 0.582);
+}
+.active:hover {
+  background-color: green;
+  cursor: pointer;
+}
+.disabled:hover {
+  background-color: rgba(128, 128, 128, 0.479);
+}

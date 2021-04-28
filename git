@@ -1,0 +1,7 @@
+git clone git@example.com:example/test.git test_project_folder #клонируем репозиторий на локалку в папку test_project_folder
+cd test_project_folder # переходим в папку
+git switch dev # переключение на ветку dev
+cat "### May be in future" > Readme.md # запись в файл
+git add Readme.md # Добавляем файл в индекс
+git commit -m "Add Readme.md" # Коммитим индексированые изменеия
+git push # пушим комиты в удаленный репозиторий

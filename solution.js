@@ -56,6 +56,11 @@ const Datas = {
  Лучше юзать что-то уже готовое и отдебаженое))
 */
 
+
+
+
+
+
 const cloneDeep = (obj) => {
     if (!obj || Array.isArray(obj)) {
         throw new TypeError("Wrong type")
@@ -82,6 +87,11 @@ const cloneDeep = (obj) => {
 Для многоуровневого добавить рекурсию, но зачем если есть флат?
 */
 
+
+
+
+
+
 const flatAnalog = (arr) => {
     if (!Array.isArray(arr)) throw new TypeError("Not array")
     return arr.reduce((acc, val) => acc.concat(val), []);
@@ -94,6 +104,11 @@ const flatAnalog = (arr) => {
  а в остальных случаях выбрасывает исключение типа MultiplicatorUnitFailure. Напишите функцию,
  обёртывающую эту, и просто вызывающую её до тех пор, пока не будет получен успешный результат.
 */
+
+
+
+
+
 function MultiplicatorUnitFailure() {
 }
 
@@ -123,6 +138,11 @@ Array.prototype.append = function (val) {
 };
 
 
+
+
+
+
+
 // 5. Выведите все элементы массива используя рекурсию.
 
 
@@ -139,6 +159,11 @@ const recuseLog = (arr, pos = 0) => {
 const arr = ['Solnce', 'vishlo', 'iz', 'za', 'tuchi'];
 recuseLog(arr);
 */
+
+
+
+
+
 
 
 //6. Написать функцию для выполнения параллельных вычислений без использования Promise.
@@ -170,6 +195,11 @@ async function paralell() {
 // console.log(paralell([a, [1, 2]], [b]));
 
 //Понял что не понял
+
+
+
+
+
 
 
 /*7. Сделать функцию поиска значений в массиве.
@@ -204,6 +234,11 @@ console.log(array_find(Datas.testData, "Rafshan")) // ["Rafshan"]
 console.log(array_find(Datas.testData, '/^raf.*!/i')) // ["Rafshan"]
 */
 
+
+
+
+
+
 /*8. Сделать функцию которая обрезает массив до указанного значения.
     Синтаксис: array_skip_until(arr: array, value: any): any[]
 */
@@ -222,14 +257,83 @@ console.log(array_skip_until(Datas.testData, "asd")) // []
 */
 
 
-// 9. Создать функцию которая нормализует данные в массиве исключая или преобразуя не подходящие.
-//
 
+
+
+
+
+// 9. Создать функцию которая нормализует данные в массиве исключая или преобразуя не подходящие.
+/*
+Доступные шаблоны:
+    'string' => строки,
+    'number' => числа,
+    'int' => целые числа,
+    'float' => числа с плавающей точкой,
+    'bool' => true | false,
+    'function' => функция,
+    'array' => массив,
+    Object => объект {name: 'string'}
+Синтаксис: array_normalize(arr: array, shema: string|Object[, transform: bool = false]): any[]
+*/
+
+/*
+Это худший код который я писал, и то он работает только в определенных случаях, мне стыдно за него
+*/
+
+const array_normalize = (arr, schema = 'string', transform = false) => {
+    const result = []
+    const isSchemaObject = schema instanceof Object
+    let schemaKey, schemaType
+    if (isSchemaObject) {
+        [schemaKey, schemaType] = Object.entries(schema)[0]
+    }
+    // const [schemaKey, schemaType] = Object.entries(schema)[0]
+    for (const arrElement of arr) {
+        const type = typeof arrElement
+        if (isSchemaObject) {
+            if (type === 'object') {
+                if (arrElement.hasOwnProperty(schemaKey)) {
+                    if (transform) {
+                        if (typeof arrElement[schemaKey] === 'number' || typeof arrElement[schemaKey] === 'string') {
+                            result.push({ [schemaKey]: arrElement[schemaKey] })
+                            continue
+                        }
+                    }
+                    if (typeof arrElement[schemaKey] === schemaType) {
+                        result.push({ [schemaKey]: arrElement[schemaKey] })
+                        continue
+                    }
+                }
+            }
+            continue
+        }
+        if (transform) {
+            if (type === 'number' && schema === 'string') {
+                result.push(arrElement + "")
+                continue
+            }
+        }
+        if (type === schema) {
+            result.push(arrElement)
+        }
+    }
+    return result
+}
+
+// console.log(array_normalize(Datas.testData4, 'string'))// ['Vasya', 'colya@example.com', 'Rafshan', 'ashan@example.com']
+// console.log(array_normalize(Datas.testData4, 'string', true)) // ['1', '2', '1990', '85', '24', 'Vasya', 'colya@example.com', 'Rafshan', 'ashan@example.com']
+// console.log(array_normalize(Datas.testData4, { age: 'float' }))// []
+// console.log(array_normalize(Datas.testData4, { age: 'float' }, true)) // [{age: 20}, {age: 34}, {age: 46}, {age: 16}, {age: 99}, {age: 11}]
 
 /*
 10. Сделать функцию которая возвращает уникальные элементы массива.
     Синтаксис: array_unique(arr: array): any[]
 */
+
+
+
+
+
 
 const array_unique = (arr) => {
     if (!Array.isArray(arr)) throw new TypeError("Not arrray")
@@ -237,6 +341,11 @@ const array_unique = (arr) => {
 }
 
 // console.log(array_unique(Datas.testData.concat(Datas.testData2)))
+
+
+
+
+
 
 
 /*
@@ -258,6 +367,11 @@ const array_pluck = (arr, string) => {
 
 // console.log(array_pluck(Datas.testData3, 'name'))
 // console.log(array_pluck(Datas.testData3, 'skills.php'))
+
+
+
+
+
 
 
 /*12. Создать функцию которая создает объект на основании двух представленных массивов используя один как ключи, а другой как значения. Не подходящие ключи массивов должны быть исключены.

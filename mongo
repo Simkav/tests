@@ -1,0 +1,8 @@
+1.Выведите 5 записей из коллекции posts пропустив первые 5
+db.posts.find().skip(5).limit(5) 
+2.Выведите все записи у которых like больше 100
+db.posts.find({like:{$gt:100}})
+3.Добавьте новую запись в коллекцию posts
+db.posts.insertOne({title:"foo",content:"bar",author:"foobar",like:0,dislike:1})
+4.Выведите список авторов и их общее количество like
+db.posts.aggregate([{$group: {_id: "$author",likes:{ $sum: "$like" }}}])

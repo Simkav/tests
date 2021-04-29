@@ -142,7 +142,34 @@ recuseLog(arr);
 
 
 //6. Написать функцию для выполнения параллельных вычислений без использования Promise.
-//Не понял задачу
+
+const a = function (one, two) {
+    return one + two
+}
+const b = function () {
+    return false;
+}
+
+//Пару часов в дебагере
+//Надеюсь то что надо
+async function paralell() {
+    const result = [];
+    for (const argsE of arguments) {
+        const func = argsE.shift()
+        const argumsForFunc = argsE[0]
+        const haveArguments = argumsForFunc !== undefined
+        if (haveArguments) {
+            result.push(func(...argumsForFunc))
+            continue
+        }
+        result.push(func())
+    }
+    return result
+}
+
+// console.log(paralell([a, [1, 2]], [b]));
+
+//Понял что не понял
 
 
 /*7. Сделать функцию поиска значений в массиве.
@@ -188,14 +215,15 @@ const array_skip_until = (arr, value) => {
     return arr.slice(index)
 }
 
-/*console.log(array_skip_until(Datas.testData, 2))// [2, 1990, 85, 24, "Vasya", "colya@example.com", "Rafshan", "ashan@example.com", true, false]
+/*
+console.log(array_skip_until(Datas.testData, 2))// [2, 1990, 85, 24, "Vasya", "colya@example.com", "Rafshan", "ashan@example.com", true, false]
 console.log(array_skip_until(Datas.testData, "Rafshan")) // ["Rafshan", "ashan@example.com", true, false]
 console.log(array_skip_until(Datas.testData, "asd")) // []
 */
 
 
 // 9. Создать функцию которая нормализует данные в массиве исключая или преобразуя не подходящие.
-//Посмотрел примеры, не понял
+//
 
 
 /*

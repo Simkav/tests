@@ -57,10 +57,6 @@ const Datas = {
 */
 
 
-
-
-
-
 const cloneDeep = (obj) => {
     if (!obj || Array.isArray(obj)) {
         throw new TypeError("Wrong type")
@@ -88,10 +84,6 @@ const cloneDeep = (obj) => {
 */
 
 
-
-
-
-
 const flatAnalog = (arr) => {
     if (!Array.isArray(arr)) throw new TypeError("Not array")
     return arr.reduce((acc, val) => acc.concat(val), []);
@@ -104,9 +96,6 @@ const flatAnalog = (arr) => {
  а в остальных случаях выбрасывает исключение типа MultiplicatorUnitFailure. Напишите функцию,
  обёртывающую эту, и просто вызывающую её до тех пор, пока не будет получен успешный результат.
 */
-
-
-
 
 
 function MultiplicatorUnitFailure() {
@@ -138,11 +127,6 @@ Array.prototype.append = function (val) {
 };
 
 
-
-
-
-
-
 // 5. Выведите все элементы массива используя рекурсию.
 
 
@@ -161,11 +145,6 @@ recuseLog(arr);
 */
 
 
-
-
-
-
-
 //6. Написать функцию для выполнения параллельных вычислений без использования Promise.
 
 const a = function (one, two) {
@@ -177,9 +156,9 @@ const b = function () {
 
 //Пару часов в дебагере
 //Надеюсь то что надо
-async function paralell() {
+async function paralell(args, resultFunc = console.log) {
     const result = [];
-    for (const argsE of arguments) {
+    for (const argsE of args) {
         const func = argsE.shift()
         const argumsForFunc = argsE[0]
         const haveArguments = argumsForFunc !== undefined
@@ -189,17 +168,12 @@ async function paralell() {
         }
         result.push(func())
     }
-    return result
+    await resultFunc(result)
 }
 
-// console.log(paralell([a, [1, 2]], [b]));
-
-//Понял что не понял
-
-
-
-
-
+paralell([[a, [1, 2]], [b]], function (results) {
+    console.log(results)
+});
 
 
 /*7. Сделать функцию поиска значений в массиве.
@@ -235,10 +209,6 @@ console.log(array_find(Datas.testData, '/^raf.*!/i')) // ["Rafshan"]
 */
 
 
-
-
-
-
 /*8. Сделать функцию которая обрезает массив до указанного значения.
     Синтаксис: array_skip_until(arr: array, value: any): any[]
 */
@@ -255,11 +225,6 @@ console.log(array_skip_until(Datas.testData, 2))// [2, 1990, 85, 24, "Vasya", "c
 console.log(array_skip_until(Datas.testData, "Rafshan")) // ["Rafshan", "ashan@example.com", true, false]
 console.log(array_skip_until(Datas.testData, "asd")) // []
 */
-
-
-
-
-
 
 
 // 9. Создать функцию которая нормализует данные в массиве исключая или преобразуя не подходящие.
@@ -331,21 +296,12 @@ const array_normalize = (arr, schema = 'string', transform = false) => {
 */
 
 
-
-
-
-
 const array_unique = (arr) => {
     if (!Array.isArray(arr)) throw new TypeError("Not arrray")
     return [...new Set(arr)]
 }
 
 // console.log(array_unique(Datas.testData.concat(Datas.testData2)))
-
-
-
-
-
 
 
 /*
@@ -367,11 +323,6 @@ const array_pluck = (arr, string) => {
 
 // console.log(array_pluck(Datas.testData3, 'name'))
 // console.log(array_pluck(Datas.testData3, 'skills.php'))
-
-
-
-
-
 
 
 /*12. Создать функцию которая создает объект на основании двух представленных массивов используя один как ключи, а другой как значения. Не подходящие ключи массивов должны быть исключены.
